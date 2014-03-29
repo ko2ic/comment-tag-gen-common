@@ -41,8 +41,8 @@ public class EnumItemsTag extends ItemsTag {
         List<EnumClassElementsItem> enumItems = (List<EnumClassElementsItem>) items;
         StringBuilder sb = new StringBuilder();
         for (EnumClassElementsItem enumAttribute : enumItems) {
-            String newContents = getSrcContents().replaceAll(getUpperCase(), enumAttribute.getUpperName());
-            newContents = newContents.replaceAll(getCamelCase(), enumAttribute.getUpperCamelName());
+            String newContents = getSrcContents().replaceAll(getUpperAll(), enumAttribute.getUpperName());
+            newContents = newContents.replaceAll(getUpperCamel(), enumAttribute.getUpperCamelName());
             newContents = newContents.replaceAll(code, enumAttribute.getCode());
             sb.append(newContents);
         }

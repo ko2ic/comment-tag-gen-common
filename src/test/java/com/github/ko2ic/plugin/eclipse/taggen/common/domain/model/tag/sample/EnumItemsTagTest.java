@@ -29,9 +29,9 @@ public class EnumItemsTagTest {
     @Test
     public void ifCall_replaceContent() {
 
-        target.setContents("contents UPPER camelCase code,");
-        target.setUpperCase("UPPER");
-        target.setCamelCase("camelCase");
+        target.setContents("contents UPPER upperCamel code,");
+        target.setUpperAll("UPPER");
+        target.setUpperCamel("upperCamel");
         target.setCode("code");
         target.setEnd(";");
         target.setSeparator(",");

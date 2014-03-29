@@ -21,24 +21,43 @@ public class ItemsTagTest {
 
     @Test
     public void ifCall_interchange() {
-        target.setCamelCase("camelCase");
-        target.setEnd(";");
-        target.setSeparator(",");
-        target.setUpperCase("upperCase");
         target.setContents("contents");
 
+        target.setEnd(";");
+        target.setSeparator(",");
+
+        target.setUpperAll("upperAll");
+        target.setUpperCamel("upperCamel");
+        target.setUpperSnake("upperSnake");
+
+        target.setLowerAll("lowerAll");
+        target.setLowerCamel("lowerCamel");
+        target.setLowerSnake("lowerSnake");
+
         ItemsTag arg = new ItemsTag();
-        arg.setCamelCase("camelCase2");
-        arg.setEnd(";2");
-        arg.setSeparator(",2");
-        arg.setUpperCase("upperCase2");
         arg.setContents("contents2");
 
+        arg.setUpperAll("upperAll2");
+        arg.setUpperCamel("upperCamel2");
+        arg.setUpperSnake("upperSnake2");
+
+        arg.setLowerAll("lowerAll2");
+        arg.setLowerCamel("lowerCamel2");
+        arg.setLowerSnake("lowerSnake2");
+
+        arg.setEnd(";2");
+        arg.setSeparator(",2");
+
         target.interchange(arg);
-        assertThat(target.getCamelCase(), is("camelCase2"));
+        assertThat(target.getUpperAll(), is("upperAll2"));
+        assertThat(target.getUpperCamel(), is("upperCamel2"));
+        assertThat(target.getUpperSnake(), is("upperSnake2"));
+        assertThat(target.getLowerAll(), is("lowerAll2"));
+        assertThat(target.getLowerCamel(), is("lowerCamel2"));
+        assertThat(target.getLowerSnake(), is("lowerSnake2"));
+
         assertThat(target.getEnd(), is(";2"));
         assertThat(target.getSeparator(), is(",2"));
-        assertThat(target.getUpperCase(), is("upperCase2"));
 
         assertThat(target.getContents(), is("contents"));
     }

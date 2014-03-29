@@ -31,10 +31,22 @@ public class ItemsTag extends CommentTag {
     private String contents;
 
     @Setter
-    private String upperCase;
+    private String upperAll;
 
     @Setter
-    private String camelCase;
+    private String upperCamel;
+
+    @Setter
+    private String upperSnake;
+
+    @Setter
+    private String lowerAll;
+
+    @Setter
+    private String lowerCamel;
+
+    @Setter
+    private String lowerSnake;
 
     @Setter
     private String separator;
@@ -53,12 +65,16 @@ public class ItemsTag extends CommentTag {
     }
 
     public void interchange(ItemsTag srcTag) {
-        setCamelCase(srcTag.getCamelCase());
+        setUpperAll((srcTag.getUpperAll()));
+        setUpperSnake(srcTag.getUpperSnake());
+        setUpperCamel(srcTag.getUpperCamel());
+        setLowerAll((srcTag.getLowerAll()));
+        setLowerSnake(srcTag.getLowerSnake());
+        setLowerCamel(srcTag.getLowerCamel());
+
         setEnd((srcTag.getEnd()));
         setSeparator((srcTag.getSeparator()));
-        setUpperCase((srcTag.getUpperCase()));
-
-        // TODO add field. ex) upperCamel,lowerCamel,upperSnake,lowerSnake,upper,lower
+        // TODO add field. ex) ,lowerCamel,,lowerSnake,,lower
     }
 
     @Override

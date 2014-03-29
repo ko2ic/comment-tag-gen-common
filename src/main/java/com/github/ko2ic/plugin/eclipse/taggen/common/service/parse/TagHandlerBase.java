@@ -32,9 +32,17 @@ public abstract class TagHandlerBase extends DefaultHandler {
 
     private static final String CLASS_COMMENT_ATTR_NAME = "classComment";
 
-    private static final String UPPER_CASE_ATTR_NAME = "upperCase";
+    private static final String UPPER_ALL_ATTR_NAME = "upperAll";
 
-    private static final String CAMEL_CASE_ATTR_NAME = "camelCase";
+    private static final String UPPER_CAMEL_ATTR_NAME = "upperCamel";
+
+    private static final String UPPER_SNAKE_ATTR_NAME = "upperSnake";
+
+    private static final String LOWER_ALL_ATTR_NAME = "lowerAll";
+
+    private static final String LOWER_CAMEL_ATTR_NAME = "lowerCamel";
+
+    private static final String LOWER_SNAKE_ATTR_NAME = "lowerSnake";
 
     private static final String SEPARATOR_ATTR_NAME = "separator";
 
@@ -77,11 +85,18 @@ public abstract class TagHandlerBase extends DefaultHandler {
             if (TagType.ITEMS.equals(qName)) {
                 ItemsTag itemsTag = instanceItemsTag();
                 for (int i = 0; i < attributes.getLength(); i++) {
-                    if (UPPER_CASE_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
-                        itemsTag.setUpperCase(attributes.getValue(i));
-                    } else if (CAMEL_CASE_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
-                        itemsTag.setCamelCase(attributes.getValue(i));
-
+                    if (UPPER_ALL_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setUpperAll(attributes.getValue(i));
+                    } else if (UPPER_CAMEL_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setUpperCamel(attributes.getValue(i));
+                    } else if (UPPER_SNAKE_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setUpperSnake(attributes.getValue(i));
+                    } else if (LOWER_ALL_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setLowerAll(attributes.getValue(i));
+                    } else if (LOWER_CAMEL_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setLowerCamel(attributes.getValue(i));
+                    } else if (LOWER_SNAKE_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
+                        itemsTag.setLowerSnake(attributes.getValue(i));
                     } else if (SEPARATOR_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
                         itemsTag.setSeparator(attributes.getValue(i));
                     } else if (END_ATTR_NAME.equalsIgnoreCase(attributes.getQName(i))) {
