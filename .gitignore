@@ -1,6 +1,14 @@
+
+# Java class files
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# generated files
+target/
+bin/
+
+# Eclipse project files
+.classpath
+.project
+.checkstyle
+.settings/
+
