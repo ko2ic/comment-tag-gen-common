@@ -74,12 +74,10 @@ public class ItemsTag extends CommentTag {
 
         setEnd((srcTag.getEnd()));
         setSeparator((srcTag.getSeparator()));
-        // TODO add field. ex) ,lowerCamel,,lowerSnake,,lower
     }
 
     @Override
     public ItemsTag clone() {
         return (ItemsTag) super.clone();
     }
-
 }

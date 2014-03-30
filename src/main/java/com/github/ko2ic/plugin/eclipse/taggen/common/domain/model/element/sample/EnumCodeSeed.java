@@ -140,6 +140,7 @@ public class EnumCodeSeed extends GeneratingCodeSeedBase {
         public List<? extends ClassElementsItem> getClassElementsItem() {
             return classElementsItems;
         }
+
     }
 
     /**

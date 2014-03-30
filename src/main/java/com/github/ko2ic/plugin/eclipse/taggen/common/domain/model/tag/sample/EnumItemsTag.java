@@ -60,4 +60,5 @@ public class EnumItemsTag extends ItemsTag {
         super.interchange(srcTag);
         setCode(((EnumItemsTag) srcTag).getCode());
     }
+
 }
