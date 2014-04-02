@@ -30,10 +30,11 @@ public class EnumCodeSeed extends GeneratingCodeSeedBase {
 
     /**
      * constructor.
-     * @param whetherPackageNameUsesSheet
+     * @param basePackageName base of package
+     * @param whetherPackageNameUsesSheet if true,use sheet
      */
-    public EnumCodeSeed(boolean whetherPackageNameUsesSheet) {
-        super(whetherPackageNameUsesSheet);
+    public EnumCodeSeed(String basePackageName, boolean whetherPackageNameUsesSheet) {
+        super(basePackageName, whetherPackageNameUsesSheet);
     }
 
     /** B Column of spreadsheet */

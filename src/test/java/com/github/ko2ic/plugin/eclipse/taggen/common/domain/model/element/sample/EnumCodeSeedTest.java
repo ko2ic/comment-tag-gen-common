@@ -28,7 +28,7 @@ import com.github.ko2ic.plugin.eclipse.taggen.common.domain.valueobject.NameRule
 @RunWith(Enclosed.class)
 public class EnumCodeSeedTest {
 
-    private final EnumCodeSeed target = new EnumCodeSeed(true);
+    private final EnumCodeSeed target = new EnumCodeSeed("base", true);
 
     @Mocked
     private Sheet mockSheet;
@@ -69,7 +69,7 @@ public class EnumCodeSeedTest {
                 result = "comment";
             }
         };
-        EnumCodeSeed target = new EnumCodeSeed(true);
+        EnumCodeSeed target = new EnumCodeSeed("base", true);
         EnumClassElementsItem actual = (EnumClassElementsItem) target.instanceClassElementsItem(mockSheet);
         EnumClassElementsItem expected = new EnumClassElementsItem(new NameRuleString("name"), "code", "comment");
         assertThat(actual.getCode(), is(expected.getCode()));
@@ -96,21 +96,21 @@ public class EnumCodeSeedTest {
         EnumClassElementsItem target = new EnumClassElementsItem(new NameRuleString("test_test"), "", "");
 
         @Test
-        public void ifCall_getUpperCamelName() {            
+        public void ifCall_getUpperCamelName() {
             String actual = target.getUpperCamelName();
-            assertThat(actual,is("TestTest"));
+            assertThat(actual, is("TestTest"));
         }
 
         @Test
         public void ifCall_getUpperSnakeName() {
             String actual = target.getUpperSnakeName();
-            assertThat(actual,is("TEST_TEST"));
+            assertThat(actual, is("TEST_TEST"));
         }
 
         @Test
         public void ifCall_getUpperName() {
             String actual = target.getUpperName();
-            assertThat(actual,is("TEST_TEST"));
+            assertThat(actual, is("TEST_TEST"));
         }
     }
 

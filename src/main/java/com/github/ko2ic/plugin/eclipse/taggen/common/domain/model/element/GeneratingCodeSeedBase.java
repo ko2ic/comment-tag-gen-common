@@ -17,6 +17,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Sheet;
+import com.google.common.base.Strings;
 
 /**
  * Handles a class information to generate code.
@@ -26,9 +27,12 @@ public abstract class GeneratingCodeSeedBase {
 
     private final Map<String, ClassElements> map = new HashMap<>();
 
+    private final String basePackageName;
+
     private final boolean whetherPackageNameUsesSheet;
 
-    public GeneratingCodeSeedBase(boolean whetherPackageNameUsesSheet) {
+    public GeneratingCodeSeedBase(String basePackageName, boolean whetherPackageNameUsesSheet) {
+        this.basePackageName = basePackageName;
         this.whetherPackageNameUsesSheet = whetherPackageNameUsesSheet;
     }
 
@@ -44,6 +48,10 @@ public abstract class GeneratingCodeSeedBase {
             packageName = sheet.getSheetName();
         } else {
             packageName = getPackageName(sheet);
+        }
+
+        if (!Strings.isNullOrEmpty(basePackageName)) {
+            packageName = basePackageName + "." + packageName;
         }
 
         String fullClassName = null;

@@ -56,7 +56,7 @@ public class GeneratingCodeSeedBaseTest {
         }
     };
 
-    private final GeneratingCodeSeedBase target = new GeneratingCodeSeedBase(false) {
+    private final GeneratingCodeSeedBase target = new GeneratingCodeSeedBase("", false) {
 
         @Override
         protected String putClassElements(Sheet sheet, String packageName) {
