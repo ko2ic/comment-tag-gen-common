@@ -11,6 +11,8 @@
 package com.github.ko2ic.plugin.eclipse.taggen.common.domain.valueobject;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 
 public class NameRuleString {
 
@@ -84,5 +86,28 @@ public class NameRuleString {
             return str.toLowerCase();
         }
         return null;
+    }
+
+    public boolean isJavaPackageName() {
+        if (Strings.isNullOrEmpty(str)) {
+            return true;
+        }
+
+        for (String split : Splitter.on(".").split(str)) {
+            if (Strings.isNullOrEmpty(split)) {
+                return false;
+            }
+
+            char[] charArray = split.toCharArray();
+            if (!Character.isJavaIdentifierStart(charArray[0])) {
+                return false;
+            }
+            for (char ch : charArray) {
+                if (!Character.isJavaIdentifierPart(ch)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

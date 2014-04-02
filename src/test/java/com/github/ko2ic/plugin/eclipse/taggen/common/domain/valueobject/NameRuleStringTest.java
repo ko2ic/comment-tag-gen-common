@@ -160,4 +160,58 @@ public class NameRuleStringTest {
         }
     }
 
+    public static class InCaseOfPackageName {
+
+        private static boolean expected = true;
+
+        @Test
+        public void ifOneWord() {
+            boolean actual = new NameRuleString("java").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+        @Test
+        public void ifTwoWord() {
+            boolean actual = new NameRuleString("jp.co").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+        @Test
+        public void ifEndIsDigit() {
+            boolean actual = new NameRuleString("jp.co1").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+        @Test
+        public void ifNull() {
+            boolean actual = new NameRuleString(null).isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+        @Test
+        public void ifEmpty() {
+            boolean actual = new NameRuleString("").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+    }
+
+    public static class InCaseOfNoPackageName {
+
+        private static boolean expected = false;
+
+        @Test
+        public void ifFirstIsDigit() {
+            boolean actual = new NameRuleString("1java").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+        @Test
+        public void ifFirstIsDigit2() {
+            boolean actual = new NameRuleString("jp.1co").isJavaPackageName();
+            assertThat(actual, is(expected));
+        }
+
+    }
+
 }
