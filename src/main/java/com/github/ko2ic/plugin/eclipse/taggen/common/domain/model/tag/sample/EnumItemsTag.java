@@ -33,7 +33,7 @@ public class EnumItemsTag extends ItemsTag {
     /**
      * Replace contents surrounded by &lt;items&gt;contents&lt;/items&gt;tag. <br/>
      * tag will be to have replacements contents..
-     * @param enumAttributes object from spreadsheet
+     * @param items class info object made by spreadsheet
      */
     @Override
     public void replaceContent(List<? extends ClassElementsItem> items) {

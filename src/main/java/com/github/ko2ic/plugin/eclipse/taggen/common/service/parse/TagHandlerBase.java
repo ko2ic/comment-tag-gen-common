@@ -17,10 +17,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.CommentTag.TagType;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.DeleteTag;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.ItemsTag;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.RootTag;
+import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.enums.TagType;
 
 /**
  * Handles Tag with SaxParser<br>

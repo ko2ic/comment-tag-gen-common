@@ -8,17 +8,12 @@
  * Contributors:
  * Kouji Ishii - initial implementation
  *******************************************************************************/
-package com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag;
+package com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.tag.enums;
 
+public enum TagType {
+    ROOT, ITEMS, DELETE;
 
-/**
- * Presents &lt;delete&gt; tag.
- * @author ko2ic
- */
-public class DeleteTag extends CommentTag {
-
-    @Override
-    public DeleteTag clone() {
-        return (DeleteTag) super.clone();
+    public boolean equals(String tagName) {
+        return this.name().equalsIgnoreCase(tagName);
     }
 }

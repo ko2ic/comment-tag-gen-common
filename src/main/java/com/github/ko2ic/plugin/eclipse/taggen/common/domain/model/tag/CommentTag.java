@@ -37,11 +37,4 @@ public abstract class CommentTag implements Cloneable {
         }
     }
 
-    public enum TagType {
-        ROOT, ITEMS, DELETE;
-
-        public boolean equals(String tagName) {
-            return this.name().equalsIgnoreCase(tagName);
-        }
-    }
 }
