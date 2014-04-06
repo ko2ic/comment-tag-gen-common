@@ -14,15 +14,22 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import org.apache.poi.ss.usermodel.Row;
 
+import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Cell;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Sheet;
+import com.github.ko2ic.plugin.eclipse.taggen.common.exceptions.InvalidCellIndexException;
 import com.google.common.base.Strings;
 
 /**
  * Handles a class information to generate code.
  * @author ko2ic
  */
+@RequiredArgsConstructor
 public abstract class GeneratingCodeSeedBase {
 
     private final Map<String, ClassElements> map = new HashMap<>();
@@ -31,16 +38,18 @@ public abstract class GeneratingCodeSeedBase {
 
     private final boolean whetherPackageNameUsesSheet;
 
-    public GeneratingCodeSeedBase(String basePackageName, boolean whetherPackageNameUsesSheet) {
-        this.basePackageName = basePackageName;
-        this.whetherPackageNameUsesSheet = whetherPackageNameUsesSheet;
-    }
+    @Getter(value = AccessLevel.PROTECTED)
+    private final String columnCellIndex;
+
+    @Getter(value = AccessLevel.PROTECTED)
+    private final String rowCellIndex;
 
     /**
      * Makes a class information used when generating code.
      * @param sheet sheet
+     * @throws InvalidCellIndexException
      */
-    public void grow(Sheet sheet) {
+    public void grow(Sheet sheet) throws InvalidCellIndexException {
 
         String packageName = null;
 
@@ -78,15 +87,16 @@ public abstract class GeneratingCodeSeedBase {
         }
     }
 
-    protected abstract ClassElementsItem instanceClassElementsItem(Sheet sheet);
+    protected abstract ClassElementsItem instanceClassElementsItem(Sheet sheet) throws InvalidCellIndexException;
 
     /**
      * Puts seed that holds a class information.
      * @param sheet
      * @param packageName
      * @return package name + class name that key of map.
+     * @throws InvalidCellIndexException
      */
-    protected abstract String putClassElements(Sheet sheet, String packageName);
+    protected abstract String putClassElements(Sheet sheet, String packageName) throws InvalidCellIndexException;
 
     /**
      * Gets row to start repeating (specifies non-empty row) .
@@ -94,7 +104,9 @@ public abstract class GeneratingCodeSeedBase {
      */
     protected abstract int getStartIndexRepeatingRow();
 
-    protected abstract String getPackageName(Sheet sheet);
+    public String getPackageName(Sheet sheet) throws InvalidCellIndexException {
+        return sheet.getStringCellValue(Cell.convertToColumnIndex(columnCellIndex), Integer.valueOf(rowCellIndex) - 1);
+    }
 
     public Map<String, ClassElements> harvest() {
         return Collections.unmodifiableMap(map);

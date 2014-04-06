@@ -12,11 +12,13 @@ package com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet;
 
 import org.apache.poi.ss.usermodel.Row;
 
+import com.github.ko2ic.plugin.eclipse.taggen.common.exceptions.InvalidCellIndexException;
+
 public interface Sheet extends Iterable<Row> {
 
     String getSheetName();
 
-    void setStartRowIndex(int startIndexRepeatingRow);
+    void setStartRowIndex(int startIndexRepeatingRow) throws InvalidCellIndexException;
 
     Row getCurrentRow();
 
@@ -24,8 +26,8 @@ public interface Sheet extends Iterable<Row> {
 
     boolean brokenSerial();
 
-    String getStringCellValue(int cellIndexClassName);
+    String getStringCellValue(int cellIndexClassName) throws InvalidCellIndexException;
 
-    String getStringCellValue(int i, int j);
+    String getStringCellValue(int columnIndex, int rowIndex) throws InvalidCellIndexException;
 
 }

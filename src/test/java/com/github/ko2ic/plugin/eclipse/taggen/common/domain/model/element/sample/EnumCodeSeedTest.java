@@ -24,11 +24,12 @@ import org.junit.runner.RunWith;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.element.sample.EnumCodeSeed.EnumClassElementsItem;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Sheet;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.valueobject.NameRuleString;
+import com.github.ko2ic.plugin.eclipse.taggen.common.exceptions.InvalidCellIndexException;
 
 @RunWith(Enclosed.class)
 public class EnumCodeSeedTest {
 
-    private final EnumCodeSeed target = new EnumCodeSeed("base", true);
+    private final EnumCodeSeed target = new EnumCodeSeed("base", true, "", "");
 
     @Mocked
     private Sheet mockSheet;
@@ -40,7 +41,7 @@ public class EnumCodeSeedTest {
     }
 
     @Test
-    public void ifCall_getPackageName() {
+    public void ifCall_getPackageName() throws InvalidCellIndexException {
         new NonStrictExpectations() {
             {
                 mockSheet.getStringCellValue(0, 1);
@@ -58,7 +59,7 @@ public class EnumCodeSeedTest {
     }
 
     @Test
-    public void ifCall_instanceClassElementsItem() {
+    public void ifCall_instanceClassElementsItem() throws InvalidCellIndexException {
         new Expectations() {
             {
                 mockSheet.getStringCellValue(3);
@@ -69,7 +70,7 @@ public class EnumCodeSeedTest {
                 result = "comment";
             }
         };
-        EnumCodeSeed target = new EnumCodeSeed("base", true);
+        EnumCodeSeed target = new EnumCodeSeed("base", true, "", "");
         EnumClassElementsItem actual = (EnumClassElementsItem) target.instanceClassElementsItem(mockSheet);
         EnumClassElementsItem expected = new EnumClassElementsItem(new NameRuleString("name"), "code", "comment");
         assertThat(actual.getCode(), is(expected.getCode()));
@@ -78,7 +79,7 @@ public class EnumCodeSeedTest {
     }
 
     @Test
-    public void ifCall_putClassElements() {
+    public void ifCall_putClassElements() throws InvalidCellIndexException {
 
         new NonStrictExpectations() {
             {

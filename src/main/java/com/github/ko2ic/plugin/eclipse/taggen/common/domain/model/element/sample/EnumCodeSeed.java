@@ -15,12 +15,14 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.element.ClassElements;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.element.ClassElementsItem;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.element.GeneratingCodeSeedBase;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Sheet;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.valueobject.NameRuleString;
+import com.github.ko2ic.plugin.eclipse.taggen.common.exceptions.InvalidCellIndexException;
 
 /**
  * Holds some classes information used when generating code.
@@ -28,33 +30,23 @@ import com.github.ko2ic.plugin.eclipse.taggen.common.domain.valueobject.NameRule
  */
 public class EnumCodeSeed extends GeneratingCodeSeedBase {
 
+    @Setter
+    private EnumCellIndexHolder cellIndexInfo;
+
     /**
      * constructor.
      * @param basePackageName base of package
      * @param whetherPackageNameUsesSheet if true,use sheet
+     * @param rowCellIndex
+     * @param columnCellIndex
      */
-    public EnumCodeSeed(String basePackageName, boolean whetherPackageNameUsesSheet) {
-        super(basePackageName, whetherPackageNameUsesSheet);
+    public EnumCodeSeed(String basePackageName, boolean whetherPackageNameUsesSheet, String columnCellIndex, String rowCellIndex) {
+        super(basePackageName, whetherPackageNameUsesSheet, columnCellIndex, rowCellIndex);
     }
 
-    /** B Column of spreadsheet */
-    private static final int CELL_INDEX_CLASS_COMMENT = 1;
-
-    /** C Column of spreadsheet */
-    private static final int CELL_INDEX_CLASS_NAME = 2;
-
-    /** D Column of spreadsheet */
-    private static final int CELL_INDEX_ENUM_NAME = 3;
-
-    /** E Column of spreadsheet */
-    private static final int CELL_INDEX_ENUM_VALUE = 4;
-
-    /** F Column of spreadsheet */
-    private static final int CELL_INDEX_ENUM_COMMENT = 5;
-
     @Override
-    protected String putClassElements(Sheet sheet, String packageName) {
-        String definedClassName = sheet.getStringCellValue(CELL_INDEX_CLASS_NAME);
+    protected String putClassElements(Sheet sheet, String packageName) throws InvalidCellIndexException {
+        String definedClassName = sheet.getStringCellValue(cellIndexInfo.getClassNameColumnIndex());
 
         NameRuleString javaClassName = new NameRuleString(definedClassName);
 
@@ -68,26 +60,9 @@ public class EnumCodeSeed extends GeneratingCodeSeedBase {
      * {@inheritDoc}
      */
     @Override
-    protected ClassElementsItem instanceClassElementsItem(Sheet sheet) {
-        return new EnumClassElementsItem(new NameRuleString(sheet.getStringCellValue(CELL_INDEX_ENUM_NAME)), sheet.getStringCellValue(CELL_INDEX_ENUM_VALUE),
-                sheet.getStringCellValue(CELL_INDEX_ENUM_COMMENT));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected int getStartIndexRepeatingRow() {
-        return 3;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getPackageName(Sheet sheet) {
-        // get value of B1 cell in spreadsheet
-        return sheet.getStringCellValue(0, 1);
+    protected ClassElementsItem instanceClassElementsItem(Sheet sheet) throws InvalidCellIndexException {
+        return new EnumClassElementsItem(new NameRuleString(sheet.getStringCellValue(cellIndexInfo.getEnumNameColumnIndex())), sheet.getStringCellValue(cellIndexInfo.getEnumValueColumnIndex()),
+                sheet.getStringCellValue(cellIndexInfo.getEnumCommentColumnIndex()));
     }
 
     /**
@@ -96,14 +71,20 @@ public class EnumCodeSeed extends GeneratingCodeSeedBase {
      * @param packageName
      * @param className the name used when generating
      * @return EnumElements
+     * @throws InvalidCellIndexException
      */
-    private EnumElements createEnumElements(Sheet sheet, String packageName, String className) {
-        String classComment = sheet.getStringCellValue(CELL_INDEX_CLASS_COMMENT);
+    private EnumElements createEnumElements(Sheet sheet, String packageName, String className) throws InvalidCellIndexException {
+        String classComment = sheet.getStringCellValue(cellIndexInfo.getClassCommentColumnIndex());
         EnumElements elements = new EnumElements(packageName, classComment, className);
-        EnumClassElementsItem type = new EnumClassElementsItem(new NameRuleString(sheet.getStringCellValue(CELL_INDEX_ENUM_NAME)), sheet.getStringCellValue(CELL_INDEX_ENUM_VALUE),
-                sheet.getStringCellValue(CELL_INDEX_ENUM_COMMENT));
+        EnumClassElementsItem type = new EnumClassElementsItem(new NameRuleString(sheet.getStringCellValue(cellIndexInfo.getEnumNameColumnIndex())), sheet.getStringCellValue(cellIndexInfo
+                .getEnumValueColumnIndex()), sheet.getStringCellValue(cellIndexInfo.getEnumCommentColumnIndex()));
         elements.addClassElementsItem(type);
         return elements;
+    }
+
+    @Override
+    protected int getStartIndexRepeatingRow() {
+        return cellIndexInfo.getStartRepeatingRowIndex();
     }
 
     /**
@@ -172,5 +153,29 @@ public class EnumCodeSeed extends GeneratingCodeSeedBase {
         public String getUpperName() {
             return name.toUpperCase();
         }
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    public static class EnumCellIndexHolder {
+
+        /** B Column of spreadsheet */
+        private final Integer classCommentColumnIndex;
+
+        /** C Column of spreadsheet */
+        private final Integer classNameColumnIndex;
+
+        /** D Column of spreadsheet */
+        private final Integer enumNameColumnIndex;
+
+        /** E Column of spreadsheet */
+        private final Integer enumValueColumnIndex;
+
+        /** F Column of spreadsheet */
+        private final Integer enumCommentColumnIndex;
+
+        /** 2 row of spreadsheet */
+        private final Integer startRepeatingRowIndex;
+
     }
 }

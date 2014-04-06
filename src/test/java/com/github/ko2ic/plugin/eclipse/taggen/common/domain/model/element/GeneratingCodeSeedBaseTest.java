@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.element.sample.EnumCodeSeed.EnumClassElementsItem;
 import com.github.ko2ic.plugin.eclipse.taggen.common.domain.model.spreadsheet.Sheet;
+import com.github.ko2ic.plugin.eclipse.taggen.common.exceptions.InvalidCellIndexException;
 
 public class GeneratingCodeSeedBaseTest {
 
@@ -56,7 +57,7 @@ public class GeneratingCodeSeedBaseTest {
         }
     };
 
-    private final GeneratingCodeSeedBase target = new GeneratingCodeSeedBase("", false) {
+    private final GeneratingCodeSeedBase target = new GeneratingCodeSeedBase("", false, "", "") {
 
         @Override
         protected String putClassElements(Sheet sheet, String packageName) {
@@ -86,7 +87,7 @@ public class GeneratingCodeSeedBaseTest {
         }
 
         @Override
-        protected String getPackageName(Sheet sheet) {
+        public String getPackageName(Sheet sheet) {
             return "packageName";
         }
     };
@@ -101,7 +102,7 @@ public class GeneratingCodeSeedBaseTest {
     private Row mockRow;
 
     @Test
-    public void ifCall_grow() {
+    public void ifCall_grow() throws NumberFormatException, InvalidCellIndexException {
         new Expectations() {
             {
                 mockSheet.setStartRowIndex(0);
